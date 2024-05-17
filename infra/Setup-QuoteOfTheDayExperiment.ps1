@@ -190,6 +190,8 @@ function Create-ExperimentVersion($workspace, $featureName, $featureEtag, $acces
         startTime = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
     }
 
+    $experimentId = Calculate-ExperimentId ".appconfig.featureflag/$($featureName)"
+
     $metric = az rest `
         --method put `
         --url  "$($workspace.properties.accessPolicy.dataPlaneEndpoint)/v1/experimentation-workspaces/$($workspace.name)/experiments/$experimentId/versions/$featureEtag" `

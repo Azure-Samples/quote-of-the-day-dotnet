@@ -1,6 +1,6 @@
 $hashAlgorithm = [System.Security.Cryptography.HashAlgorithm]::Create('SHA256')
 
-$RawAppDisplayName = "$env:AZURE_SUBSCRIPTION_ID$AZURE_ENV_NAME$AZURE_LOCATION"
+$RawAppDisplayName = "$env:AZURE_SUBSCRIPTION_ID$env:AZURE_ENV_NAME$env:AZURE_LOCATION"
 
 $HashedAppDisplayName = $hashAlgorithm.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($RawAppDisplayName))
 

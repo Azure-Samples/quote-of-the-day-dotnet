@@ -4,7 +4,7 @@ name: QuoteOfTheDayAZD
 metadata:
     template: azd-init@1.9.0
 hooks:
-    preup:
+    prepackage:
         shell: pwsh
         run: |
             Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
