@@ -1,57 +1,28 @@
-# Project Name
-
-(short, 1-3 sentenced, description of the project)
-
-## Features
-
-This project framework provides the following features:
-
-* Feature 1
-* Feature 2
-* ...
-
-## Getting Started
+# QuoteOfTheDayAZD
 
 ### Prerequisites
 
-(ideally very short, if any)
+- Clone the quote-of-the-day-dotnet repository: https://github.com/Azure-Samples/quote-of-the-day-dotnet
+- Install Powershell if not already installed: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4
+- Install Azure CLI: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
+- Install & start Docker Desktop:  https://docs.docker.com/engine/install/
 
-- OS
-- Library version
-- ...
+### Use Azure Developer CLI
 
-### Installation
+This application can be run using the [Azure Developer CLI](https://aka.ms/azd), or `azd`, with very few commands:
 
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [repository name]
-3. ...
-
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
-
-## Resources
-
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+- Install [azd](https://aka.ms/azure-dev/install).
+- Log in `azd` (if you haven't done it before) to your Azure account:
+```sh
+azd auth login
+```
+- Create Azure resources and deploy the sample by running:
+```sh
+azd up
+```
+Notes:
+  - The operation takes a few minutes the first time it is ever run for an environment.
+  - At the end of the process, `azd` will display the `url` for the webapp. Follow that link to test the sample.
+  - You can run `azd up` after saving changes to the sample to re-deploy and update the sample.
+  - Report any issues to [azure-dev](https://github.com/Azure/azure-dev/issues) repo.
+  - [FAQ and troubleshoot](https://learn.microsoft.com/azure/developer/azure-developer-cli/troubleshoot?tabs=Browser) for azd.

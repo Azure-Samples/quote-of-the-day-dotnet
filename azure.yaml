@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: QuoteOfTheDayAZD
+metadata:
+    template: azd-init@1.9.0
+hooks:
+    preup:
+        shell: pwsh
+        run: |
+            Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+            ./infra/Setup-CreateDatabase.ps1
+            ./infra/Setup-SplitExperimentationEntraApp.ps1
+        interactive: true
+        continueOnError: false
+    postup:
+        shell: pwsh
+        run: |
+            Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+            ./infra/Setup-QuoteOfTheDayExperiment.ps1 -SubscriptionId $env:AZURE_SUBSCRIPTION_ID -WorkspaceName $env:AZURE_SPLIT_WORKSPACE_NAME -AppConfigurationName $env:AZURE_APPCONFIGURATION_NAME
+        interactive: true
+        continueOnError: false 
+services:
+    QuoteOfTheDay:
+        project: QuoteOfTheDay
+        host: containerapp
+        language: dotnet
