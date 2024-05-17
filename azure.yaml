@@ -12,7 +12,7 @@ hooks:
             ./infra/Setup-SplitExperimentationEntraApp.ps1
         interactive: true
         continueOnError: false
-    postup:
+    postprovision:
         shell: pwsh
         run: |
             Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 

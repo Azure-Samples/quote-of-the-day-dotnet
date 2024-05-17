@@ -16,6 +16,12 @@ This application can be run using the [Azure Developer CLI](https://aka.ms/azd),
 ```sh
 azd auth login
 ```
+- Initialize `azd` from the root of the repo.
+```sh
+azd init
+```
+- During init:
+  - Enter an environment name for this deployment when prompted.
 - Create Azure resources and deploy the sample by running:
 ```sh
 azd up

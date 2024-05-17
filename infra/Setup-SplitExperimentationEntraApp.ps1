@@ -35,6 +35,15 @@ function Setup-SplitExperimentationEntraApp
 
     $app = Get-SplitApp
 
+    if ($app -eq $null)
+    {
+        Write-Host "Creating Entra ID app"
+
+        az ad app create --display-name "$AppDisplayName"
+
+        $app = Get-SplitApp
+    }
+
     $folderPath = "./.azure/$env:AZURE_ENV_NAME"
     $envFile = Get-ChildItem -Path $folderPath -Filter "*.env" | Select-Object -First 1
     $envFilePath = $envFile.FullName
@@ -53,15 +62,6 @@ function Setup-SplitExperimentationEntraApp
       }
 
       Add-Content -Path $envFilePath -Value $envVarLine
-    }
-
-    if ($app -eq $null)
-    {
-        Write-Host "Creating Entra ID app"
-
-        az ad app create --display-name "$AppDisplayName"
-
-        $app = Get-SplitApp
     }
 
     ###########
