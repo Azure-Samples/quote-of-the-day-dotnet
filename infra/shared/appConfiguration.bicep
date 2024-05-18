@@ -33,7 +33,49 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
   parent: appConfigurationStore
   properties: {
     contentType: 'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
-    value: '{"id": "Greeting","description": "","enabled": true,"conditions": {"client_filters": [{"name": "AlwaysOn"}]},"variants": [{"name": "On","configuration_value": true},{"name": "Off","configuration_value": false}],"allocation": {"percentile": [{ "variant": "On","from": 0,"to": 50}]}}'
+    value: '''
+    {
+      "id": "Greeting",
+      "description": "",
+      "enabled": true,
+      "variants": [
+        {
+          "name": "On",
+          "configuration_value": true
+        },
+        {
+          "name": "Off",
+          "configuration_value": false
+        }
+      ],
+      "allocation": {
+        "percentile": [
+          {
+            "variant": "On",
+            "from": 0,
+            "to": 50
+          },
+          {
+            "variant": "Off",
+            "from": 50,
+            "to": 100
+          }
+        ],
+        "default_when_enabled": "Off",
+        "default_when_disabled": "Off"
+      },
+      "telemetry": {
+        "enabled": true
+      },
+      "conditions": {
+        "client_filters": [
+          {
+            "name": "AlwaysOn"
+          }
+        ]
+      }
+    }
+    '''
   }
 }
 
