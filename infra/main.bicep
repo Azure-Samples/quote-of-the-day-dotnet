@@ -113,7 +113,7 @@ module appConfiguration './shared/appConfiguration.bicep' = {
     AACsku: AACsku
     location: location
     name: '${AACname}${resourceToken}'
-    applicationInsightsName: monitoring.outputs.applicationInsightsName
+    applicationInsightsId: monitoring.outputs.applicationInsightsId
     dataplaneEndpoint: dataplaneEndpoint
     splitExperimentationWorkspaceResourceId: splitExperimentationWorkspace.outputs.splitExperimentationWorkspaceResourceId
   }

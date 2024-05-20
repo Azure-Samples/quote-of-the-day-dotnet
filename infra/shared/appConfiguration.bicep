@@ -4,7 +4,7 @@ param AACsku string
 param AACsoftDeleteRetentionInDays int
 param AACenablePurgeProtection bool
 param AACdisableLocalAuth bool
-param applicationInsightsName string
+param applicationInsightsId string
 param splitExperimentationWorkspaceResourceId string
 param dataplaneEndpoint string
 
@@ -23,7 +23,7 @@ resource appConfigurationStore 'Microsoft.AppConfiguration/configurationStores@2
       dataPlaneEndpoint: dataplaneEndpoint
     }
     telemetry: {
-      resourceId: applicationInsightsName
+      resourceId: applicationInsightsId
     }
   }
 }
