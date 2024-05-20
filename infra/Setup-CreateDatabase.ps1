@@ -7,6 +7,8 @@ if ($databaseExists) {
     exit 0
 }
 
+Write-Host "Creating database file."
+
 Set-Location -Path "./QuoteOfTheDay"
 
 $dotnetSDK = dotnet --version

@@ -51,7 +51,7 @@
         "value": "sewpreview"
       },
       "SEWsku": {
-        "value": "azure_experimentation_private_preview_free%%Monthly"
+        "value": "split_experimentation_azure_monthly_payg%%Monthly"
       },
       "SEWdataSourceEnabled": {
         "value": true
