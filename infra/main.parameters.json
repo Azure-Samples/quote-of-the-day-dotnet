@@ -57,7 +57,7 @@
         "value": true
       },
       "SEWEntraApplicationId": {
-        "value": "${AZURE_SPLIT_ENTRA_APPLICATION_ID}"
+        "value": "${AZURE_SPLIT_ENTRA_APPLICATION_ID=null}"
       },
       "AACname": {
         "value": "aacpreview"
