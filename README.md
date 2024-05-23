@@ -6,7 +6,7 @@
 - Install or update to Powershell 7 <https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4>
 - Install or update Azure CLI <https://learn.microsoft.com/en-us/cli/azure/install-azure-cli>
 - Install & start Docker Desktop  <https://docs.docker.com/engine/install>
-- Ensure you have the required permissions to deploy into the target subscription. Either of the below sets of roles can be used:
+- Ensure you have the required permissions to deploy into the target Azure subscription. Either of the below sets of roles can be used:
   - Owner
   - Contributer & User Access Administrator
 
