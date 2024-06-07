@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    ViewData["Username"] = User.Identity.Name;
+    ViewData["Username"] = User.Identity?.Name;
 }
 
 <style>
@@ -64,15 +64,15 @@
     <div class="quote-content">
         @if (Model.ShowGreeting)
         {
-            <h3 class="greeting-content">Hi <b>@User.Identity.Name</b>, hope this makes your day!</h3>
+            <h3 class="greeting-content">Hi <b>@User.Identity?.Name</b>, hope this makes your day!</h3>
         }
         else
         {
             <h3 class="greeting-content">Quote of the day</h3>
         }
         <br />
-        <p class="quote">“@Model.Quote.Message”</p>
-        <p>- <b>@Model.Quote.Author</b></p>
+        <p class="quote">“@(Model.Quote?.Message ?? "No message")”</p>
+        <p>- <b>@(Model.Quote?.Author ?? "Unknown")</b></p>
     </div>
 
     <div class="vote-container">

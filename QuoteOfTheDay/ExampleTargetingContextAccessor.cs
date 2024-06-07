@@ -14,22 +14,33 @@ namespace QuoteOfTheDay
 
         public ValueTask<TargetingContext> GetContextAsync()
         {
-            HttpContext httpContext = _httpContextAccessor.HttpContext;
-            if (httpContext.Items.TryGetValue(TargetingContextLookup, out object value))
+            HttpContext? httpContext = _httpContextAccessor.HttpContext;
+
+            if (httpContext == null)
+            {
+                throw new InvalidOperationException("HttpContext is not available.");
+            }
+
+            if (httpContext.Items.TryGetValue(TargetingContextLookup, out object? value) && value != null)
             {
                 return new ValueTask<TargetingContext>((TargetingContext)value);
             }
+
             List<string> groups = new List<string>();
-            if (httpContext.User.Identity.Name != null)
+
+            if (httpContext.User.Identity?.Name != null)
             {
                 groups.Add(httpContext.User.Identity.Name.Split("@", StringSplitOptions.None)[1]);
             }
+
             TargetingContext targetingContext = new TargetingContext
             {
-                UserId = httpContext.User.Identity.Name,
+                UserId = httpContext.User.Identity?.Name,
                 Groups = groups
             };
+
             httpContext.Items[TargetingContextLookup] = targetingContext;
+
             return new ValueTask<TargetingContext>(targetingContext);
         }
     }
