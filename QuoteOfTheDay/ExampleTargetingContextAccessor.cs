@@ -18,7 +18,7 @@ namespace QuoteOfTheDay
 
             if (httpContext == null)
             {
-                throw new InvalidOperationException("HttpContext is not available.");
+                return new ValueTask<TargetingContext>(new TargetingContext());
             }
 
             if (httpContext.Items.TryGetValue(TargetingContextLookup, out object? value) && value != null)
