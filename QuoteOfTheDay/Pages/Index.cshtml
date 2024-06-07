@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    ViewData["Username"] = User.Identity?.Name;
+    ViewData["Username"] = User.Identity?.Name ?? string.Empty;
 }
 
 <style>
