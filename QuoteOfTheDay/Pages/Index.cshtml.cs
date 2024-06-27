@@ -12,8 +12,12 @@ public class Quote
     public string Author { get; set; }
 }
 
-public class IndexModel(IVariantFeatureManagerSnapshot featureManager, TelemetryClient telemetryClient) : PageModel
+public class IndexModel(
+    ILogger<IndexModel> logger,
+    IVariantFeatureManagerSnapshot featureManager,
+    TelemetryClient telemetryClient) : PageModel
 {
+    private readonly ILogger _logger = logger;
     private readonly IVariantFeatureManagerSnapshot _featureManager = featureManager;
     private readonly TelemetryClient _telemetryClient = telemetryClient;
 
@@ -34,7 +38,16 @@ public class IndexModel(IVariantFeatureManagerSnapshot featureManager, Telemetry
 
         Variant variant = await _featureManager.GetVariantAsync("Greeting", HttpContext.RequestAborted);
 
-        ShowGreeting = variant.Configuration.Get<bool>();
+        if (variant != null)
+        {
+            ShowGreeting = variant.Configuration.Get<bool>();
+        }
+        else
+        {
+            _logger.LogWarning("Greeting variant not found. Please define a variant feature flag in Azure App Configuration named 'Greeting' with 'true' and 'false' variants.");
+
+            ShowGreeting = false;
+        }
     }
 
     public IActionResult OnPostHeartQuoteAsync()
