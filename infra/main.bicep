@@ -152,3 +152,5 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = registry.outputs.loginServer
 output AZURE_SPLIT_WORKSPACE_NAME string = splitExperimentationWorkspace.outputs.splitExperimentationWorkspaceName
 output AZURE_APPCONFIGURATION_NAME string = appConfiguration.outputs.appConfigurationName
+output AzureAppConfigurationConnectionString string = appConfiguration.outputs.appConfigurationConnectionString
+output ApplicationInsightsConnectionString string = monitoring.outputs.applicationInsightsConnectionString
