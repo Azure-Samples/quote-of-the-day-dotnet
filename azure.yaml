@@ -20,14 +20,15 @@ hooks:
             $folderPath = "./.azure/$env:AZURE_ENV_NAME"
             $envFile = Get-ChildItem -Path $folderPath -Filter "*.env" | Select-Object -First 1
             $envFilePath = $envFile.FullName
-            $appConfigurationConnectionStringEnvVarName = "AzureAppConfigurationConnectionString"
+            $appConfigConnectionStringEnvVarName = "AzureAppConfigurationConnectionString"
             $appInsightsConnectionStringEnvVarName = "ApplicationInsightsConnectionString"
-            $appConfigurationConnectionStringEnvLine = (Get-Content $envFilePath) | Where-Object { $_ -match $appConfigurationConnectionStringEnvVarName }
+            $appConfigConnectionStringEnvLine = (Get-Content $envFilePath) | Where-Object { $_ -match $appConfigConnectionStringEnvVarName }
             $appInsightsConnectionStringEnvLine = (Get-Content $envFilePath) | Where-Object { $_ -match $appInsightsConnectionStringEnvVarName }
-            $envLineParts = $appConfigurationConnectionStringEnvLine -split "=", 2
-            $env:AzureAppConfigurationConnectionString = $envLineParts[1].Trim()
-            $envLineParts = $appInsightsConnectionStringEnvLine -split "=", 2
-            $env:ApplicationInsightsConnectionString = $envLineParts[1].Trim()
+            $appConfigEnvLineParts = $appConfigConnectionStringEnvLine -split "=", 2
+            $env:AzureAppConfigurationConnectionString = $appConfigEnvLineParts[1].Trim().Trim('"')
+            Write-Host $env:AzureAppConfigurationConnectionString
+            $appInsightsEnvLineParts = $appInsightsConnectionStringEnvLine -split "=", 2
+            $env:ApplicationInsightsConnectionString = $appInsightsEnvLineParts[1].Trim().Trim('"')
             dotnet run --project ./QuoteOfTheDay/QuoteOfTheDay.csproj
         interactive: true
         continueOnError: false 
