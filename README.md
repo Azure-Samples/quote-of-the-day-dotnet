@@ -8,7 +8,7 @@
 - Install & start Docker Desktop  <https://docs.docker.com/engine/install>
 - Ensure you have the required permissions to deploy into the target Azure subscription. Either of the below sets of roles can be used:
   - Owner
-  - Contributer & User Access Administrator
+  - Contributor & User Access Administrator
 
 ## Use Azure Developer CLI
 
