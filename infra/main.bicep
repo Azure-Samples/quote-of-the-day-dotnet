@@ -120,17 +120,17 @@ module appConfiguration './shared/appConfiguration.bicep' = {
   scope: rg
 }
 
-module appsEnv './shared/apps-env.bicep' = {
-  name: 'apps-env'
-  params: {
-    name: '${abbrs.appManagedEnvironments}${resourceToken}'
-    location: location
-    tags: tags
-    applicationInsightsName: monitoring.outputs.applicationInsightsName
-    logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
-  }
-  scope: rg
-}
+// module appsEnv './shared/apps-env.bicep' = {
+//   name: 'apps-env'
+//   params: {
+//     name: '${abbrs.appManagedEnvironments}${resourceToken}'
+//     location: location
+//     tags: tags
+//     applicationInsightsName: monitoring.outputs.applicationInsightsName
+//     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
+//   }
+//   scope: rg
+// }
 
 module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
   name: 'QuoteOfTheDay'
