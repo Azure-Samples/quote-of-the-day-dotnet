@@ -8,6 +8,7 @@ param exists bool
 @secure()
 param appDefinition object
 param appConfigurationConnectionString string
+param appServicePlanId string
 
 var appSettingsArray = filter(array(appDefinition.settings), i => i.name != '')
 var secrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
@@ -33,10 +34,12 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
   name: name
   location: location
   tags: tags
-  sku: sku
-  kind: kind
+  sku: {
+    name: 'B3'
+  }
+  kind: ''
   properties: {
-    reserved: reserved
+    reserved: true
   }
 }
 

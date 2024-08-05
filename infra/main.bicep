@@ -140,8 +140,6 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     tags: tags
     identityName: '${abbrs.managedIdentityUserAssignedIdentities}quoteoftheda-${resourceToken}'
     applicationInsightsName: monitoring.outputs.applicationInsightsName
-    containerAppsEnvironmentName: appsEnv.outputs.name
-    containerRegistryName: registry.outputs.name
     exists: quoteOfTheDayExists
     appDefinition: quoteOfTheDayDefinition
     appConfigurationConnectionString: appConfiguration.outputs.appConfigurationConnectionString
