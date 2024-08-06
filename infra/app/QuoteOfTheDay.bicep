@@ -59,5 +59,24 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
   }
 }
 
+module configAppSettings '../shared/appservice-appsettings.bicep' = {
+  name: '${name}-appSettings'
+  params: {
+    name: appService.name
+  }
+}
+
+resource configLogs 'Microsoft.Web/sites/config@2023-01-01' = {
+  name: 'logs'
+  parent: appService
+  properties: {
+    applicationLogs: { fileSystem: { level: 'Verbose' } }
+    detailedErrorMessages: { enabled: true }
+    failedRequestsTracing: { enabled: true }
+    httpLogs: { fileSystem: { enabled: true, retentionInDays: 1, retentionInMb: 35 } }
+  }
+  dependsOn: [configAppSettings]
+}
+
 output name string = appService.name
 output uri string = 'https://${appService.properties.defaultHostName}'
