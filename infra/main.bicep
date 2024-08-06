@@ -78,16 +78,6 @@ module monitoring './shared/monitoring.bicep' = {
   scope: rg
 }
 
-module registry './shared/registry.bicep' = {
-  name: 'registry'
-  params: {
-    location: location
-    tags: tags
-    name: '${abbrs.containerRegistryRegistries}${resourceToken}'
-  }
-  scope: rg
-}
-
 module splitExperimentationWorkspace './shared/splitExperimentationWorkspace.bicep' = {
   name: 'splitExperimentationWorkspace'
   params: {
@@ -120,17 +110,15 @@ module appConfiguration './shared/appConfiguration.bicep' = {
   scope: rg
 }
 
-// module appsEnv './shared/apps-env.bicep' = {
-//   name: 'apps-env'
-//   params: {
-//     name: '${abbrs.appManagedEnvironments}${resourceToken}'
-//     location: location
-//     tags: tags
-//     applicationInsightsName: monitoring.outputs.applicationInsightsName
-//     logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
-//   }
-//   scope: rg
-// }
+module appServicePlan './shared/appserviceplan.bicep' = {
+  name: 'apps-env'
+  params: {
+    name: '${abbrs.appManagedEnvironments}${resourceToken}'
+    location: location
+    tags: tags
+  }
+  scope: rg
+}
 
 module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
   name: 'QuoteOfTheDay'
@@ -143,11 +131,11 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     exists: quoteOfTheDayExists
     appDefinition: quoteOfTheDayDefinition
     appConfigurationConnectionString: appConfiguration.outputs.appConfigurationConnectionString
+    appServicePlanId: appServicePlan.outputs.id
   }
   scope: rg
 }
 
-output AZURE_CONTAINER_REGISTRY_ENDPOINT string = registry.outputs.loginServer
 output AZURE_SPLIT_WORKSPACE_NAME string = splitExperimentationWorkspace.outputs.splitExperimentationWorkspaceName
 output AZURE_APPCONFIGURATION_NAME string = appConfiguration.outputs.appConfigurationName
 output AzureAppConfigurationConnectionString string = appConfiguration.outputs.appConfigurationConnectionString
