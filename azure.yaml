@@ -24,17 +24,3 @@ services:
         project: QuoteOfTheDay
         host: appservice
         language: dotnet
-
-            # $folderPath = "./.azure/$env:AZURE_ENV_NAME"
-            # $envFile = Get-ChildItem -Path $folderPath -Filter "*.env" | Select-Object -First 1
-            # $envFilePath = $envFile.FullName
-            # $appConfigConnectionStringEnvVarName = "AzureAppConfigurationConnectionString"
-            # $appInsightsConnectionStringEnvVarName = "ApplicationInsightsConnectionString"
-            # $appConfigConnectionStringEnvLine = (Get-Content $envFilePath) | Where-Object { $_ -match $appConfigConnectionStringEnvVarName }
-            # $appInsightsConnectionStringEnvLine = (Get-Content $envFilePath) | Where-Object { $_ -match $appInsightsConnectionStringEnvVarName }
-            # $appConfigEnvLineParts = $appConfigConnectionStringEnvLine -split "=", 2
-            # $env:AzureAppConfigurationConnectionString = $appConfigEnvLineParts[1].Trim().Trim('"')
-            # Write-Host $env:AzureAppConfigurationConnectionString
-            # $appInsightsEnvLineParts = $appInsightsConnectionStringEnvLine -split "=", 2
-            # $env:ApplicationInsightsConnectionString = $appInsightsEnvLineParts[1].Trim().Trim('"')
-            # dotnet run --project ./QuoteOfTheDay/QuoteOfTheDay.csproj

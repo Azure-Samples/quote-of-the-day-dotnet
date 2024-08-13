@@ -5,10 +5,6 @@ targetScope = 'subscription'
 @description('Name of the environment that can be used as part of naming resource convention')
 param environmentName string
 
-param quoteOfTheDayExists bool
-@secure()
-param quoteOfTheDayDefinition object
-
 param LAWname string
 param location string
 param LAWsku string
@@ -128,8 +124,6 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     tags: tags
     identityName: '${abbrs.managedIdentityUserAssignedIdentities}quoteoftheda-${resourceToken}'
     applicationInsightsName: monitoring.outputs.applicationInsightsName
-    exists: quoteOfTheDayExists
-    appDefinition: quoteOfTheDayDefinition
     appConfigurationConnectionString: appConfiguration.outputs.appConfigurationConnectionString
     appServicePlanId: appServicePlan.outputs.id
   }
