@@ -4,6 +4,8 @@ param tags object = {}
 
 param identityName string
 param applicationInsightsName string
+@secure()
+param appDefinition object
 param appConfigurationConnectionString string
 param appServicePlanId string
 
@@ -30,16 +32,6 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
       appCommandLine: 'dotnet QuoteOfTheDay.dll'
       linuxFxVersion: 'DOTNETCORE|8.0'
       alwaysOn: true
-      // appSettings: [
-      //   {
-      //     name: 'ApplicationInsightsConnectionString'
-      //     value: applicationInsights.properties.ConnectionString
-      //   }
-      //   {
-      //     name: 'AzureAppConfigurationConnectionString'
-      //     value: appConfigurationConnectionString
-      //   }
-      // ]
     }
   }
 }
@@ -60,7 +52,8 @@ module configAppSettings '../shared/appservice-appsettings.bicep' = {
       },
       {
         AzureAppConfigurationConnectionString: appConfigurationConnectionString
-      })
+      },
+      appDefinition.settings)
   }
 }
 
