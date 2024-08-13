@@ -41,14 +41,13 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
   properties: {
     serverFarmId: appServicePlanId
     siteConfig: {
+      appCommandLine: 'dotnet QuoteOfTheDay.dll'
+      linuxFxVersion: 'DOTNETCORE|8.0'
+      alwaysOn: true
       appSettings: [
         {
           name: 'ApplicationInsightsConnectionString'
           value: applicationInsights.properties.ConnectionString
-        }
-        {
-          name: 'PORT'
-          value: '80'
         }
         {
           name: 'AzureAppConfigurationConnectionString'
@@ -63,19 +62,20 @@ module configAppSettings '../shared/appservice-appsettings.bicep' = {
   name: '${name}-appSettings'
   params: {
     name: appService.name
+    appSettings: union(
+      {
+        ApplicationInsightsConnectionString: applicationInsights.properties.ConnectionString
+      },
+      {
+        ENABLE_ORYX_BUILD: true
+      },
+      {
+        SCM_DO_BUILD_DURING_DEPLOYMENT: false
+      },
+      {
+        AzureAppConfigurationConnectionString: appConfigurationConnectionString
+      })
   }
-}
-
-resource configLogs 'Microsoft.Web/sites/config@2023-01-01' = {
-  name: 'logs'
-  parent: appService
-  properties: {
-    applicationLogs: { fileSystem: { level: 'Verbose' } }
-    detailedErrorMessages: { enabled: true }
-    failedRequestsTracing: { enabled: true }
-    httpLogs: { fileSystem: { enabled: true, retentionInDays: 1, retentionInMb: 35 } }
-  }
-  dependsOn: [configAppSettings]
 }
 
 output name string = appService.name
