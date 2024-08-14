@@ -10,6 +10,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   sku: {
     name: SASkuName
   }
+  properties: {
+    allowSharedKeyAccess: false
+  }
 }
 
 output storageAccountId string = storageAccount.id

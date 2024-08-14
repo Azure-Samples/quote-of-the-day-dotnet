@@ -22,5 +22,5 @@ hooks:
 services:
     QuoteOfTheDay:
         project: QuoteOfTheDay
-        host: containerapp
+        host: appservice
         language: dotnet

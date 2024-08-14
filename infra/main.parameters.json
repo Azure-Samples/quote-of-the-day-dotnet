@@ -5,13 +5,10 @@
       "environmentName": {
         "value": "${AZURE_ENV_NAME}"
       },
-      "quoteOfTheDayExists": {
-        "value": "${SERVICE_QUOTEOFTHEDAY_RESOURCE_EXISTS=false}"
-      },
       "quoteOfTheDayDefinition": {
         "value": {
-          "settings": [
-          ]
+          "settings": {
+          }
         }
       },
       "principalId": {

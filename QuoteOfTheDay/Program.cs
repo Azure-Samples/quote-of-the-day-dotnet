@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using QuoteOfTheDay.Data;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.FeatureManagement.Telemetry.ApplicationInsights.AspNetCore;
 using Microsoft.FeatureManagement.Telemetry.ApplicationInsights;
 using Microsoft.FeatureManagement;
 using QuoteOfTheDay;
@@ -40,7 +39,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAzureAppConfiguration()
     .AddFeatureManagement()
     .WithTargeting<ExampleTargetingContextAccessor>()
-    .AddTelemetryPublisher<ApplicationInsightsTelemetryPublisher>();
+    .AddApplicationInsightsTelemetryPublisher();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

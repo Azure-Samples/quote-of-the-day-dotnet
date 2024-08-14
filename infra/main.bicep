@@ -5,7 +5,6 @@ targetScope = 'subscription'
 @description('Name of the environment that can be used as part of naming resource convention')
 param environmentName string
 
-param quoteOfTheDayExists bool
 @secure()
 param quoteOfTheDayDefinition object
 
@@ -78,16 +77,6 @@ module monitoring './shared/monitoring.bicep' = {
   scope: rg
 }
 
-module registry './shared/registry.bicep' = {
-  name: 'registry'
-  params: {
-    location: location
-    tags: tags
-    name: '${abbrs.containerRegistryRegistries}${resourceToken}'
-  }
-  scope: rg
-}
-
 module splitExperimentationWorkspace './shared/splitExperimentationWorkspace.bicep' = {
   name: 'splitExperimentationWorkspace'
   params: {
@@ -120,14 +109,12 @@ module appConfiguration './shared/appConfiguration.bicep' = {
   scope: rg
 }
 
-module appsEnv './shared/apps-env.bicep' = {
+module appServicePlan './shared/appserviceplan.bicep' = {
   name: 'apps-env'
   params: {
     name: '${abbrs.appManagedEnvironments}${resourceToken}'
     location: location
     tags: tags
-    applicationInsightsName: monitoring.outputs.applicationInsightsName
-    logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
   }
   scope: rg
 }
@@ -140,15 +127,14 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     tags: tags
     identityName: '${abbrs.managedIdentityUserAssignedIdentities}quoteoftheda-${resourceToken}'
     applicationInsightsName: monitoring.outputs.applicationInsightsName
-    containerAppsEnvironmentName: appsEnv.outputs.name
-    containerRegistryName: registry.outputs.name
-    exists: quoteOfTheDayExists
     appDefinition: quoteOfTheDayDefinition
     appConfigurationConnectionString: appConfiguration.outputs.appConfigurationConnectionString
+    appServicePlanId: appServicePlan.outputs.id
   }
   scope: rg
 }
 
-output AZURE_CONTAINER_REGISTRY_ENDPOINT string = registry.outputs.loginServer
 output AZURE_SPLIT_WORKSPACE_NAME string = splitExperimentationWorkspace.outputs.splitExperimentationWorkspaceName
 output AZURE_APPCONFIGURATION_NAME string = appConfiguration.outputs.appConfigurationName
+output AzureAppConfigurationConnectionString string = appConfiguration.outputs.appConfigurationConnectionString
+output ApplicationInsightsConnectionString string = monitoring.outputs.applicationInsightsConnectionString

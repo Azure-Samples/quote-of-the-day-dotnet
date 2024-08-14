@@ -50,3 +50,4 @@ output applicationInsightsName string = applicationInsights.name
 output applicationInsightsId string = applicationInsights.id
 output logAnalyticsWorkspaceId string = logAnalytics.id
 output logAnalyticsWorkspaceName string = logAnalytics.name
+output applicationInsightsConnectionString string = applicationInsights.properties.ConnectionString
