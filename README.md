@@ -20,6 +20,11 @@ This application can be run using the [Azure Developer CLI](https://aka.ms/azd),
 azd auth login
 ```
 
+- Authenticate with the Azure CLI:
+```sh
+az login
+```
+
 - Initialize `azd` from the root of the repo.
 
 ```sh
