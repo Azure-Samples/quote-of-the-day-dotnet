@@ -2,7 +2,7 @@
 
 name: QuoteOfTheDayAZD
 metadata:
-    template: azd-init@1.9.0
+    template: quote-of-the-day-dotnet@0.0.1-beta
 hooks:
     prepackage:
         shell: pwsh
