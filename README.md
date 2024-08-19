@@ -13,16 +13,12 @@
 
 This application can be run using the [Azure Developer CLI](https://aka.ms/azd), or `azd`, with very few commands:
 
+- Navigate to the root of the repository.
 - Install [azd](https://aka.ms/azure-dev/install).
 - Log in `azd` (if you haven't done it before) to your Azure account:
 
 ```sh
 azd auth login
-```
-
-- Authenticate with the Azure CLI:
-```sh
-az login
 ```
 
 - Initialize `azd` from the root of the repo.
