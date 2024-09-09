@@ -44,8 +44,6 @@ function Setup-SplitExperimentationEntraApp
         $app = Get-SplitApp
     }
 
-    az ad app owner add --id $app.id --owner-object-id $userObjectId
-
     $folderPath = "./.azure/$env:AZURE_ENV_NAME"
     $envFile = Get-ChildItem -Path $folderPath -Filter "*.env" | Select-Object -First 1
     $envFilePath = $envFile.FullName
