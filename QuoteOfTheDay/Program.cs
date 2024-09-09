@@ -9,29 +9,25 @@ using QuoteOfTheDay;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString");
-var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString");
+var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString") ?? "";
+var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString") ?? "";
 
-if (!string.IsNullOrEmpty(appConfigurationConnectionString)) {
-    builder.Configuration
-        .AddAzureAppConfiguration(o =>
-        {
-            o.Connect(appConfigurationConnectionString);
+builder.Configuration
+    .AddAzureAppConfiguration(o =>
+    {
+        o.Connect(appConfigurationConnectionString);
 
-            o.UseFeatureFlags();
-        });
-}
+        o.UseFeatureFlags();
+    });
 
-if (!string.IsNullOrEmpty(applicationInsightsConnectionString)) {
-    // Add Application Insights telemetry.
-    builder.Services.AddApplicationInsightsTelemetry(
-        new ApplicationInsightsServiceOptions
-        {
-            ConnectionString = applicationInsightsConnectionString,
-            EnableAdaptiveSampling = false
-        })
-        .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
-}
+// Add Application Insights telemetry.
+builder.Services.AddApplicationInsightsTelemetry(
+    new ApplicationInsightsServiceOptions
+    {
+        ConnectionString = applicationInsightsConnectionString,
+        EnableAdaptiveSampling = false
+    })
+    .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
 
 builder.Services.AddHttpContextAccessor();
 
