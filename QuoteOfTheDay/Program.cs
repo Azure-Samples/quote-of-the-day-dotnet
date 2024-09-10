@@ -12,22 +12,25 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString") ?? "";
 var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString") ?? "";
 
-builder.Configuration
-    .AddAzureAppConfiguration(o =>
-    {
-        o.Connect(appConfigurationConnectionString);
+if (!string.IsNullOrEmpty(appConfigurationConnectionString)) {
+    builder.Configuration
+        .AddAzureAppConfiguration(o =>
+        {
+            o.Connect(appConfigurationConnectionString);
+            o.UseFeatureFlags();
+        });
+}
 
-        o.UseFeatureFlags();
-    });
-
-// Add Application Insights telemetry.
-builder.Services.AddApplicationInsightsTelemetry(
-    new ApplicationInsightsServiceOptions
-    {
-        ConnectionString = applicationInsightsConnectionString,
-        EnableAdaptiveSampling = false
-    })
-    .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
+if (!string.IsNullOrEmpty(applicationInsightsConnectionString)) {
+    // Add Application Insights telemetry.
+    builder.Services.AddApplicationInsightsTelemetry(
+        new ApplicationInsightsServiceOptions
+        {
+            ConnectionString = applicationInsightsConnectionString,
+            EnableAdaptiveSampling = false
+        })
+        .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
+}
 
 builder.Services.AddHttpContextAccessor();
 
