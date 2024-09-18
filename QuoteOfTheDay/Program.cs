@@ -9,28 +9,29 @@ using QuoteOfTheDay;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString") ?? "";
-var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString") ?? "";
+string defaultConnectionString = "Endpoint=https://azure.azconfig.io;Id=defaultId;Secret=U0VDUkVUX0RVTU1ZX1NUUklORw==";
 
-if (!string.IsNullOrEmpty(appConfigurationConnectionString)) {
-    builder.Configuration
-        .AddAzureAppConfiguration(o =>
-        {
-            o.Connect(appConfigurationConnectionString);
-            o.UseFeatureFlags();
+var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString") ?? defaultConnectionString;
+var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString") ?? defaultConnectionString;
+
+builder.Configuration
+    .AddAzureAppConfiguration(o =>
+    {
+        o.Connect(appConfigurationConnectionString);
+        o.UseFeatureFlags();
+        o.ConfigureStartupOptions(startupOptions => {
+            startupOptions.Timeout = TimeSpan.FromSeconds(30);
         });
-}
+    }, optional: appConfigurationConnectionString == defaultConnectionString);
 
-if (!string.IsNullOrEmpty(applicationInsightsConnectionString)) {
-    // Add Application Insights telemetry.
-    builder.Services.AddApplicationInsightsTelemetry(
-        new ApplicationInsightsServiceOptions
-        {
-            ConnectionString = applicationInsightsConnectionString,
-            EnableAdaptiveSampling = false
-        })
-        .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
-}
+// Add Application Insights telemetry.
+builder.Services.AddApplicationInsightsTelemetry(
+    new ApplicationInsightsServiceOptions
+    {
+        ConnectionString = applicationInsightsConnectionString,
+        EnableAdaptiveSampling = false
+    })
+    .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
 
 builder.Services.AddHttpContextAccessor();
 
