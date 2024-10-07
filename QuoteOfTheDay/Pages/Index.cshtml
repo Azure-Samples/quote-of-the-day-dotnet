@@ -62,9 +62,9 @@
 
 <div class="quote-container">
     <div class="quote-content">
-        @if (Model.ShowGreeting)
+        @if (Model.Greeting != null)
         {
-            <h3 class="greeting-content">Hi <b>@User.Identity?.Name</b>, hope this makes your day!</h3>
+            <h3 class="greeting-content">@(Model.Greeting)</h3>
         }
         else
         {

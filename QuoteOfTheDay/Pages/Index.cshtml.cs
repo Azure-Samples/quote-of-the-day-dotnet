@@ -30,7 +30,7 @@ public class IndexModel(
 
     public Quote? Quote { get; set; }
 
-    public bool ShowGreeting { get; set; }
+    public string? Greeting { get; set; }
 
     public async void OnGet()
     {
@@ -40,13 +40,11 @@ public class IndexModel(
 
         if (variant != null)
         {
-            ShowGreeting = variant.Configuration.Get<bool>();
+            Greeting = string.Format(variant.Configuration?.Get<string>() ?? "", User.Identity?.Name);
         }
         else
         {
-            _logger.LogWarning("Greeting variant not found. Please define a variant feature flag in Azure App Configuration named 'Greeting' with 'true' and 'false' variants.");
-
-            ShowGreeting = false;
+            _logger.LogWarning("Greeting variant not found. Please define a variant feature flag in Azure App Configuration named 'Greeting'.");
         }
     }
 

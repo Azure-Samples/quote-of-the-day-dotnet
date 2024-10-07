@@ -5,14 +5,13 @@ using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.FeatureManagement.Telemetry.ApplicationInsights;
 using Microsoft.FeatureManagement;
-using QuoteOfTheDay;
 
 var builder = WebApplication.CreateBuilder(args);
 
 string defaultConnectionString = "Endpoint=https://azure.azconfig.io;Id=defaultId;Secret=U0VDUkVUX0RVTU1ZX1NUUklORw==";
 
-var appConfigurationConnectionString = Environment.GetEnvironmentVariable("AzureAppConfigurationConnectionString") ?? defaultConnectionString;
-var applicationInsightsConnectionString = Environment.GetEnvironmentVariable("ApplicationInsightsConnectionString") ?? defaultConnectionString;
+var appConfigurationConnectionString = builder.Configuration["AzureAppConfigurationConnectionString"] ?? defaultConnectionString;
+var applicationInsightsConnectionString = builder.Configuration["ApplicationInsightsConnectionString"] ?? defaultConnectionString;
 
 builder.Configuration
     .AddAzureAppConfiguration(o =>
@@ -33,12 +32,10 @@ builder.Services.AddApplicationInsightsTelemetry(
     })
     .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
 
-builder.Services.AddHttpContextAccessor();
-
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
     .AddFeatureManagement()
-    .WithTargeting<ExampleTargetingContextAccessor>()
+    .WithTargeting()
     .AddApplicationInsightsTelemetryPublisher();
 
 // Add services to the container.
