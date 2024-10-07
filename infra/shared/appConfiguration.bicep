@@ -43,12 +43,12 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
           "name": "None"
         },
         {
-          "name": "Long",
-          "configuration_value": "I hope this makes your day!"
-        },
-        {
           "name": "Simple",
           "configuration_value": "Hello!"
+        },
+        {
+          "name": "Long",
+          "configuration_value": "I hope this makes your day!"
         }
       ],
       "allocation": {
@@ -59,12 +59,12 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
             "to": 50
           },
           {
-            "variant": "Long",
+            "variant": "Simple",
             "from": 50,
             "to": 75
           },
           {
-            "variant": "Simple",
+            "variant": "Long",
             "from": 75,
             "to": 100
           }

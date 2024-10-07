@@ -62,14 +62,7 @@
 
 <div class="quote-container">
     <div class="quote-content">
-        @if (Model.Greeting != null)
-        {
-            <h3 class="greeting-content">@(Model.Greeting)</h3>
-        }
-        else
-        {
-            <h3 class="greeting-content">Quote of the day</h3>
-        }
+        <h3 class="greeting-content">@(Model.Greeting)</h3>
         <br />
         <p class="quote">“@(Model.Quote?.Message ?? "< Quote not found >")”</p>
         <p>- <b>@(Model.Quote?.Author ?? "Unknown")</b></p>

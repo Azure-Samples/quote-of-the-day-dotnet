@@ -30,7 +30,7 @@ public class IndexModel(
 
     public Quote? Quote { get; set; }
 
-    public string? Greeting { get; set; }
+    public string Greeting { get; set; }
 
     public async void OnGet()
     {
