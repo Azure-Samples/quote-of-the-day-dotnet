@@ -40,7 +40,7 @@ public class IndexModel(
 
         if (variant != null)
         {
-            Greeting = string.Format(variant.Configuration?.Get<string>() ?? "", User.Identity?.Name);
+            Greeting = variant.Configuration?.Get<string>() ?? "";
         }
         else
         {

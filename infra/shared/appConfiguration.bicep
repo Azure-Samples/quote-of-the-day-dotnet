@@ -44,11 +44,11 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
         },
         {
           "name": "Long",
-          "configuration_value": "Hi {0}, hope this makes your day!"
+          "configuration_value": "I hope this makes your day!"
         },
         {
           "name": "Simple",
-          "configuration_value": "Hello {0}!"
+          "configuration_value": "Hello!"
         }
       ],
       "allocation": {
