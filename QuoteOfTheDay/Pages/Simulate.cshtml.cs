@@ -28,7 +28,7 @@ public class SimulateModel : PageModel
         string randomUserId = Guid.NewGuid().ToString();
 
         var activityFeature = HttpContext.Features.Get<IHttpActivityFeature>();
-        activityFeature.Activity.SetBaggage("TargetingId", randomUserId);
+        activityFeature.Activity.SetBaggage("Microsoft.FeatureManagement.TargetingId", randomUserId);
 
         Variant variant = await _featureManager.GetVariantAsync("Greeting", new TargetingContext() { UserId= randomUserId });
 
