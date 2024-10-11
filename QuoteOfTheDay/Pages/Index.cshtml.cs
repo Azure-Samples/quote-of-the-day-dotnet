@@ -20,8 +20,9 @@ public class IndexModel(
     private readonly ILogger _logger = logger;
     private readonly IVariantFeatureManagerSnapshot _featureManager = featureManager;
     private readonly TelemetryClient _telemetryClient = telemetryClient;
+    private const string GreetingFeatureFlag = "Greeting";
 
-    private Quote[] _quotes = [
+    private readonly Quote[] _quotes = [
         new Quote()
         {
             Message = "You cannot change what you are, only what you do.",
@@ -36,7 +37,7 @@ public class IndexModel(
     {
         Quote = _quotes[new Random().Next(_quotes.Length)];
 
-        Variant variant = await _featureManager.GetVariantAsync("Greeting", HttpContext.RequestAborted);
+        Variant variant = await _featureManager.GetVariantAsync(GreetingFeatureFlag, HttpContext.RequestAborted);
 
         if (variant != null)
         {
@@ -44,7 +45,7 @@ public class IndexModel(
         }
         else
         {
-            _logger.LogWarning("Greeting variant not found. Please define a variant feature flag in Azure App Configuration named 'Greeting'.");
+            _logger.LogWarning($"Greeting variant not found. Please define a variant feature flag in Azure App Configuration named '{GreetingFeatureFlag}'.");
         }
     }
 
