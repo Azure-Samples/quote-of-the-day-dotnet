@@ -40,29 +40,37 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
       "enabled": true,
       "variants": [
         {
-          "name": "On",
-          "configuration_value": true
+          "name": "Default"
         },
         {
-          "name": "Off",
-          "configuration_value": false
+          "name": "Simple",
+          "configuration_value": "Hello!"
+        },
+        {
+          "name": "Long",
+          "configuration_value": "I hope this makes your day!"
         }
       ],
       "allocation": {
         "percentile": [
           {
-            "variant": "On",
+            "variant": "Default",
             "from": 0,
             "to": 50
           },
           {
-            "variant": "Off",
+            "variant": "Simple",
             "from": 50,
+            "to": 75
+          },
+          {
+            "variant": "Long",
+            "from": 75,
             "to": 100
           }
         ],
-        "default_when_enabled": "Off",
-        "default_when_disabled": "Off"
+        "default_when_enabled": "Default",
+        "default_when_disabled": "Default"
       },
       "telemetry": {
         "enabled": true
