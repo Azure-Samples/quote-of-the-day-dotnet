@@ -40,7 +40,7 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
       "enabled": true,
       "variants": [
         {
-          "name": "None"
+          "name": "Default"
         },
         {
           "name": "Simple",
@@ -54,7 +54,7 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
       "allocation": {
         "percentile": [
           {
-            "variant": "None",
+            "variant": "Default",
             "from": 0,
             "to": 50
           },
@@ -69,8 +69,8 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
             "to": 100
           }
         ],
-        "default_when_enabled": "None",
-        "default_when_disabled": "None"
+        "default_when_enabled": "Default",
+        "default_when_disabled": "Default"
       },
       "telemetry": {
         "enabled": true
