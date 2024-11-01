@@ -91,6 +91,5 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
   scope: rg
 }
 
-output AZURE_APPCONFIGURATION_NAME string = appConfiguration.outputs.appConfigurationName
 output AzureAppConfigurationConnectionString string = appConfiguration.outputs.appConfigurationConnectionString
 output ApplicationInsightsConnectionString string = monitoring.outputs.applicationInsightsConnectionString
