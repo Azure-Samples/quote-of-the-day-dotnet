@@ -5,8 +5,6 @@ param AItype string
 param AIrequestSource string
 param LAWsku string
 param tags object = {}
-param storageAccountResourceId string
-param storageAccountRuleName string
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: logAnalyticsName
@@ -16,20 +14,6 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-previ
     sku: {
       name: LAWsku
     }
-  }
-}
-
-resource logAnalyticsStorageAccountRule 'microsoft.operationalinsights/workspaces/dataexports@2020-08-01' = {
-  parent: logAnalytics
-  name: storageAccountRuleName
-  properties: {
-    destination: {
-      resourceId: storageAccountResourceId
-    }
-    tableNames: [
-      'AppEvents'
-    ]
-    enable: true
   }
 }
 

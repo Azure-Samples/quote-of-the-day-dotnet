@@ -5,8 +5,6 @@ param AACsoftDeleteRetentionInDays int
 param AACenablePurgeProtection bool
 param AACdisableLocalAuth bool
 param applicationInsightsId string
-param splitExperimentationWorkspaceResourceId string
-param dataplaneEndpoint string
 
 resource appConfigurationStore 'Microsoft.AppConfiguration/configurationStores@2023-09-01-preview' = {
   name: name
@@ -18,10 +16,6 @@ resource appConfigurationStore 'Microsoft.AppConfiguration/configurationStores@2
     softDeleteRetentionInDays: AACsoftDeleteRetentionInDays
     enablePurgeProtection: AACenablePurgeProtection
     disableLocalAuth: AACdisableLocalAuth
-    experimentation: {
-      resourceId: splitExperimentationWorkspaceResourceId
-      dataPlaneEndpoint: dataplaneEndpoint
-    }
     telemetry: {
       resourceId: applicationInsightsId
     }
