@@ -8,8 +8,10 @@ using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationConnectionString = builder.Configuration["AzureAppConfigurationConnectionString"];
-var applicationInsightsConnectionString = builder.Configuration["ApplicationInsightsConnectionString"];
+string defaultConnectionString = "Endpoint=https://azure.azconfig.io;Id=defaultId;Secret=U0VDUkVUX0RVTU1ZX1NUUklORw==";
+
+var appConfigurationConnectionString = builder.Configuration["AzureAppConfigurationConnectionString"] ?? defaultConnectionString;
+var applicationInsightsConnectionString = builder.Configuration["ApplicationInsightsConnectionString"] ?? defaultConnectionString;
 
 builder.Configuration
     .AddAzureAppConfiguration(o =>
@@ -19,7 +21,7 @@ builder.Configuration
         o.ConfigureStartupOptions(startupOptions => {
             startupOptions.Timeout = TimeSpan.FromSeconds(30);
         });
-    });
+    }, optional: appConfigurationConnectionString == defaultConnectionString);
 
 // Add Application Insights telemetry.
 builder.Services.AddApplicationInsightsTelemetry(
