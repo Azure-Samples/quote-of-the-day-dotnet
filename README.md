@@ -1,4 +1,4 @@
-# QuoteOfTheDayAZD
+# Quote of the Day - .NET
 
 ## Prerequisites
 
@@ -45,6 +45,6 @@ Notes:
 - The operation takes a few minutes the first time it is ever run for an environment.
 - At the end of the process, `azd` will display the `url` for the webapp. Follow that link to test the sample.
 - You can run `azd up` after saving changes to the sample to re-deploy and update the sample.
-- `azd down` is an easy way to delete the newly created resources. The Entra App Registration will not be removed and must be removed separately.
+- `azd down` is an easy way to delete the newly created resources.
 - Report any problems by opening an issue in [this repo](https://github.com/Azure-Samples/quote-of-the-day-dotnet/issues).
 - [FAQ and troubleshoot](https://learn.microsoft.com/azure/developer/azure-developer-cli/troubleshoot?tabs=Browser) for azd.
