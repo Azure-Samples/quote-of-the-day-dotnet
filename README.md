@@ -1,4 +1,4 @@
-# Quote of the Day - .NET
+# Quote of the Day - ASP.NET Core
 
 ## Prerequisites
 
