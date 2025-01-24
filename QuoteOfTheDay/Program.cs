@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuoteOfTheDay.Data;
@@ -8,13 +9,13 @@ using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationConnectionString = builder.Configuration["AzureAppConfigurationConnectionString"];
-var applicationInsightsConnectionString = builder.Configuration["ApplicationInsightsConnectionString"];
+var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
+var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 
 builder.Configuration
     .AddAzureAppConfiguration(o =>
     {
-        o.Connect(appConfigurationConnectionString);
+        o.Connect(new Uri(appConfigurationEndpoint), new DefaultAzureCredential());
         o.UseFeatureFlags();
         o.ConfigureStartupOptions(startupOptions => {
             startupOptions.Timeout = TimeSpan.FromSeconds(30);
