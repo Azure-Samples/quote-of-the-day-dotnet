@@ -82,7 +82,6 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     name: '${abbrs.appContainerApps}quoteoftheda-${resourceToken}'
     location: location
     tags: tags
-    identityName: '${abbrs.managedIdentityUserAssignedIdentities}quoteoftheda-${resourceToken}'
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     appDefinition: quoteOfTheDayDefinition
     appServicePlanId: appServicePlan.outputs.id

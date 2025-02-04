@@ -2,17 +2,11 @@ param name string
 param location string = resourceGroup().location
 param tags object = {}
 
-param identityName string
 param applicationInsightsName string
 @secure()
 param appDefinition object
 param appServicePlanId string
 param appConfigurationName string
-
-resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: identityName
-  location: location
-}
 
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: applicationInsightsName
