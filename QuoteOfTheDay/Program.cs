@@ -19,15 +19,17 @@ if (isRunningFromSetupScript)
 var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
 var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 
-builder.Configuration
-    .AddAzureAppConfiguration(o =>
-    {
-        o.Connect(new Uri(appConfigurationEndpoint), new DefaultAzureCredential());
-        o.UseFeatureFlags();
-        o.ConfigureStartupOptions(startupOptions => {
-            startupOptions.Timeout = TimeSpan.FromSeconds(30);
+if (!string.IsNullOrEmpty(appConfigurationEndpoint)) {
+    builder.Configuration
+        .AddAzureAppConfiguration(o =>
+        {
+            o.Connect(new Uri(appConfigurationEndpoint), new DefaultAzureCredential());
+            o.UseFeatureFlags();
+            o.ConfigureStartupOptions(startupOptions => {
+                startupOptions.Timeout = TimeSpan.FromSeconds(30);
+            });
         });
-    }, optional: isRunningFromSetupScript);
+}
 
 // Add Application Insights telemetry.
 builder.Services.AddApplicationInsightsTelemetry(
