@@ -9,7 +9,8 @@ using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
+var placeholderEndpoint = "https://azure.azconfig.io";
+var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"] ?? placeholderEndpoint;
 var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 
 builder.Configuration
@@ -20,7 +21,7 @@ builder.Configuration
         o.ConfigureStartupOptions(startupOptions => {
             startupOptions.Timeout = TimeSpan.FromSeconds(30);
         });
-    });
+    }, optional: appConfigurationEndpoint.Equals(placeholderEndpoint));
 
 // Add Application Insights telemetry.
 builder.Services.AddApplicationInsightsTelemetry(
