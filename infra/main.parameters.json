@@ -18,7 +18,7 @@
         "value": "lawpreview"
       },
       "location": {
-        "value": "eastus"
+        "value": "${AZURE_LOCATION}"
       },
       "LAWsku": {
         "value": "pergb2018"

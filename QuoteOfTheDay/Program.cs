@@ -9,8 +9,14 @@ using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var placeholderEndpoint = "https://azure.azconfig.io";
-var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"] ?? placeholderEndpoint;
+// Check if we're running from the database setup script
+bool isRunningFromSetupScript = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RUNNING_EF_MIGRATIONS_SETUP"));
+if (isRunningFromSetupScript)
+{
+    Console.WriteLine("Running database setup - skipping Azure App Configuration");
+}
+
+var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
 var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 
 builder.Configuration
@@ -21,7 +27,7 @@ builder.Configuration
         o.ConfigureStartupOptions(startupOptions => {
             startupOptions.Timeout = TimeSpan.FromSeconds(30);
         });
-    }, optional: appConfigurationEndpoint.Equals(placeholderEndpoint));
+    }, optional: isRunningFromSetupScript);
 
 // Add Application Insights telemetry.
 builder.Services.AddApplicationInsightsTelemetry(
