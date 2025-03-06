@@ -81,7 +81,5 @@ resource variantFeatureFlagGreeting 'Microsoft.AppConfiguration/configurationSto
   }
 }
 
-var readonlyKey = filter(appConfigurationStore.listKeys().value, k => k.name == 'Primary Read Only')[0]
-
-output appConfigurationConnectionString string = readonlyKey.connectionString
+output appConfigurationEndpoint string = appConfigurationStore.properties.endpoint
 output appConfigurationName string = appConfigurationStore.name

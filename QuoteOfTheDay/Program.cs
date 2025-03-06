@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuoteOfTheDay.Data;
@@ -8,18 +9,27 @@ using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appConfigurationConnectionString = builder.Configuration["AzureAppConfigurationConnectionString"];
-var applicationInsightsConnectionString = builder.Configuration["ApplicationInsightsConnectionString"];
+// Check if we're running from the database setup script
+bool isRunningFromSetupScript = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RUNNING_EF_MIGRATIONS_SETUP"));
+if (isRunningFromSetupScript)
+{
+    Console.WriteLine("Running database setup - skipping Azure App Configuration");
+}
 
-builder.Configuration
-    .AddAzureAppConfiguration(o =>
-    {
-        o.Connect(appConfigurationConnectionString);
-        o.UseFeatureFlags();
-        o.ConfigureStartupOptions(startupOptions => {
-            startupOptions.Timeout = TimeSpan.FromSeconds(30);
+var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
+var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+
+if (!string.IsNullOrEmpty(appConfigurationEndpoint)) {
+    builder.Configuration
+        .AddAzureAppConfiguration(o =>
+        {
+            o.Connect(new Uri(appConfigurationEndpoint), new DefaultAzureCredential());
+            o.UseFeatureFlags();
+            o.ConfigureStartupOptions(startupOptions => {
+                startupOptions.Timeout = TimeSpan.FromSeconds(30);
+            });
         });
-    });
+}
 
 // Add Application Insights telemetry.
 builder.Services.AddApplicationInsightsTelemetry(

@@ -18,22 +18,10 @@
         "value": "lawpreview"
       },
       "location": {
-        "value": "eastus"
+        "value": "${AZURE_LOCATION}"
       },
       "LAWsku": {
         "value": "pergb2018"
-      },
-      "SAName": {
-        "value": "sapreview"
-      },
-      "SAKind": {
-        "value": "StorageV2"
-      },
-      "SASkuName": {
-        "value": "Standard_LRS"
-      },
-      "SASkuTier": {
-        "value": "Standard"
       },
       "AIname": {
         "value": "aipreview"
