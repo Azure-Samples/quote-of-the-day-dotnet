@@ -37,14 +37,14 @@ builder.Services.AddApplicationInsightsTelemetry(
     {
         ConnectionString = applicationInsightsConnectionString,
         EnableAdaptiveSampling = false
-    })
-    .AddSingleton<ITelemetryInitializer, TargetingTelemetryInitializer>();
+    });
 
 // Add Azure App Configuration and feature management services to the container.
 builder.Services.AddAzureAppConfiguration()
-    .AddFeatureManagement()
-    .WithTargeting()
-    .AddApplicationInsightsTelemetryPublisher();
+    .AddApplicationInsightsTelemetry();
+
+builder.Services.AddFeatureManagement()
+    .WithTargeting();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
