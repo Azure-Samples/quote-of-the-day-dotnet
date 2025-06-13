@@ -24,6 +24,7 @@ param AACdisableLocalAuth bool
 param principalId string
 param principalType string = 'User'
 
+@description('Enable online experimentation (preview), currently only available in the East US 2 and Sweden Central regions.')
 param enableOnlineExperimentation bool
 
 // Tags that should be applied to all resources.
@@ -114,7 +115,7 @@ module onlineExperimentationWorkspace 'shared/onlineExperimentation.bicep' = if 
 
 
 var ruleDefinitions = loadYamlContent('shared/la-summary-rules.yaml')
-module summaryRules 'shared/summaryrule.bicep' = [for (rule, i) in ruleDefinitions.summaryRules: if (enableOnlineExperimentation) {
+module summaryRules 'shared/summaryRule.bicep' = [for (rule, i) in ruleDefinitions.summaryRules: if (enableOnlineExperimentation) {
   name: 'loganalytics-summaryrule-${i}'
   scope: rg
   params: {

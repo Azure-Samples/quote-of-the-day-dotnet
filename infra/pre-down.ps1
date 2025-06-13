@@ -16,4 +16,5 @@ if ($resourceExists) {
     az resource delete --ids $experimentationResourceId --api-version 2025-02-01-preview
 } else {
     Write-Host "Online experimentation not enabled, skipping online experimentation disable step"
+    exit 0
 }
