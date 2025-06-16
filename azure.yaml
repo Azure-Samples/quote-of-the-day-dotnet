@@ -12,12 +12,18 @@ hooks:
         interactive: true
         continueOnError: false
     predown:
-        shell: pwsh
-        run: |
-            Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass  
-            ./infra/pre-down.ps1
-        continueOnError: false
-        interactive: true
+        windows:
+            shell: pwsh
+            run: |
+                Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass  
+                ./infra/scripts/pre-down.ps1
+            continueOnError: false
+            interactive: true
+        posix:
+            shell: sh
+            run: pwsh ./infra/scripts/pre-down.ps1
+            continueOnError: false
+            interactive: true
 services:
     QuoteOfTheDay:
         project: QuoteOfTheDay
