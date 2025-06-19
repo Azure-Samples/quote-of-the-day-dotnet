@@ -11,6 +11,19 @@ hooks:
             ./infra/Setup-CreateDatabase.ps1
         interactive: true
         continueOnError: false
+    predown:
+        windows:
+            shell: pwsh
+            run: |
+                Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass  
+                ./infra/pre-down.ps1
+            continueOnError: false
+            interactive: true
+        posix:
+            shell: sh
+            run: pwsh ./infra/pre-down.ps1
+            continueOnError: false
+            interactive: true
 services:
     QuoteOfTheDay:
         project: QuoteOfTheDay

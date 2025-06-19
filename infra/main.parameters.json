@@ -36,16 +36,19 @@
         "value": "aacpreview"
       },
       "AACsku": {
-        "value": "standard"
+        "value": "developer"
       },
       "AACsoftDeleteRetentionInDays": {
-        "value": 7
+        "value": 0
       },
       "AACenablePurgeProtection": {
         "value": false
       },
       "AACdisableLocalAuth": {
         "value": false
+      },
+      "enableOnlineExperimentation": {
+        "value": "${ENABLE_ONLINE_EXPERIMENTATION=false}"
       }
   }
 }
