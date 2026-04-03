@@ -44,7 +44,7 @@ builder.Services.AddApplicationInsightsTelemetry(
 builder.Services.AddAzureAppConfiguration()
     .AddFeatureManagement()
     .WithTargeting()
-    .AddApplicationInsightsTelemetryPublisher();
+    .AddApplicationInsightsTelemetry();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
