@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoteOfTheDay", "QuoteOfTheDay\QuoteOfTheDay.csproj", "{37241C66-DC82-42D1-B206-C87F9A2E70CA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoteOfTheDay-OpenTelemetry", "QuoteOfTheDay-OpenTelemetry\QuoteOfTheDay-OpenTelemetry.csproj", "{EBDC88F0-6328-4CFE-8833-6B07D52E5D8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{37241C66-DC82-42D1-B206-C87F9A2E70CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37241C66-DC82-42D1-B206-C87F9A2E70CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37241C66-DC82-42D1-B206-C87F9A2E70CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDC88F0-6328-4CFE-8833-6B07D52E5D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDC88F0-6328-4CFE-8833-6B07D52E5D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDC88F0-6328-4CFE-8833-6B07D52E5D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDC88F0-6328-4CFE-8833-6B07D52E5D8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

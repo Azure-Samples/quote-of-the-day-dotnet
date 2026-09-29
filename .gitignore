@@ -294,3 +294,5 @@ __pycache__/
 .azure
 
 *.db
+*.db-shm
+*.db-wal
