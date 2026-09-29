@@ -1,37 +1,47 @@
-$databasePath = "./QuoteOfTheDay\*.db"
-$databaseExists = Test-Path -Path $databasePath
+param(
+    [ValidateSet("QuoteOfTheDay", "QuoteOfTheDay-OpenTelemetry")]
+    [string]$ProjectName = $(if ([string]::IsNullOrEmpty($env:QUOTE_OF_THE_DAY_PROJECT)) {
+        "QuoteOfTheDay"
+    } else {
+        $env:QUOTE_OF_THE_DAY_PROJECT
+    })
+)
 
-if ($databaseExists) {
-    Write-Host "The database file already exists."
+$ErrorActionPreference = "Stop"
+$projectPath = Join-Path (Split-Path $PSScriptRoot -Parent) $ProjectName
+$previousMigrationSetup = $env:RUNNING_EF_MIGRATIONS_SETUP
+$previousAppConfigEndpoint = $env:APPCONFIG_ENDPOINT
+$previousInsightsConnectionString = $env:APPLICATIONINSIGHTS_CONNECTION_STRING
 
-    exit 0
+Push-Location $projectPath
+try {
+    dotnet --version
+    if ($LASTEXITCODE -ne 0) {
+        throw "The .NET 8 SDK is required to initialize the database."
+    }
+
+    dotnet ef --version
+    if ($LASTEXITCODE -ne 0) {
+        dotnet tool install --global dotnet-ef --version 8.0.8
+        if ($LASTEXITCODE -ne 0) {
+            throw "Failed to install dotnet-ef."
+        }
+    }
+
+    $env:RUNNING_EF_MIGRATIONS_SETUP = "true"
+    $env:APPCONFIG_ENDPOINT = $null
+    $env:APPLICATIONINSIGHTS_CONNECTION_STRING = $null
+
+    # Apply checked-in migrations, including pending ones on an existing database.
+    dotnet ef database update
+    if ($LASTEXITCODE -ne 0) {
+        throw "Database setup failed for $ProjectName."
+    }
+
+    Write-Host "Database is ready for $ProjectName."
+} finally {
+    $env:RUNNING_EF_MIGRATIONS_SETUP = $previousMigrationSetup
+    $env:APPCONFIG_ENDPOINT = $previousAppConfigEndpoint
+    $env:APPLICATIONINSIGHTS_CONNECTION_STRING = $previousInsightsConnectionString
+    Pop-Location
 }
-
-Write-Host "Creating database file."
-
-Set-Location -Path "./QuoteOfTheDay"
-
-$dotnetSDK = dotnet --version
-if ($dotnetSDK -eq $null) {
-    winget install Microsoft.DotNet.SDK.8
-} else {
-    Write-Host "The .NET SDK is already installed."
-}
-
-# Set environment variable to indicate EF migrations are running from setup script
-$env:RUNNING_EF_MIGRATIONS_SETUP = "true"
-
-# Temporarily set Azure environment variables to null to prevent connection attempts
-$env:APPCONFIG_ENDPOINT = $null
-$env:APPLICATIONINSIGHTS_CONNECTION_STRING = $null
-
-dotnet tool install --global dotnet-ef
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-
-# Clean up environment variable
-$env:RUNNING_EF_MIGRATIONS_SETUP = $null
-
-Write-Host "Created the database file."
-
-Set-Location -Path ".."

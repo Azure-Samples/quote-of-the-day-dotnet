@@ -7,6 +7,11 @@ param applicationInsightsName string
 param appDefinition object
 param appServicePlanId string
 param appConfigurationName string
+@allowed([
+  'QuoteOfTheDay'
+  'QuoteOfTheDay-OpenTelemetry'
+])
+param sampleProject string = 'QuoteOfTheDay'
 
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
   name: applicationInsightsName
@@ -22,7 +27,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
   properties: {
     serverFarmId: appServicePlanId
     siteConfig: {
-      appCommandLine: 'dotnet QuoteOfTheDay.dll'
+      appCommandLine: 'dotnet ${sampleProject}.dll'
       linuxFxVersion: 'DOTNETCORE|8.0'
       alwaysOn: true
     }
