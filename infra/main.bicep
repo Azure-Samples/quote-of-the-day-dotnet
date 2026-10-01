@@ -5,6 +5,13 @@ targetScope = 'subscription'
 @description('Name of the environment that can be used as part of naming resource convention')
 param environmentName string
 
+@description('Sample project to run in the existing App Service. Must match services.QuoteOfTheDay.project in azure.yaml.')
+@allowed([
+  'QuoteOfTheDay'
+  'QuoteOfTheDay-OpenTelemetry'
+])
+param sampleProject string = 'QuoteOfTheDay'
+
 @secure()
 param quoteOfTheDayDefinition object
 
@@ -86,6 +93,7 @@ module quoteOfTheDay './app/QuoteOfTheDay.bicep' = {
     appDefinition: quoteOfTheDayDefinition
     appServicePlanId: appServicePlan.outputs.id
     appConfigurationName: appConfiguration.outputs.appConfigurationName
+    sampleProject: sampleProject
   }
   scope: rg
 }

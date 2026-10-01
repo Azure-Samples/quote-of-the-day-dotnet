@@ -5,14 +5,14 @@
       "environmentName": {
         "value": "${AZURE_ENV_NAME}"
       },
+      "sampleProject": {
+        "value": "${QUOTE_OF_THE_DAY_PROJECT:-QuoteOfTheDay}"
+      },
       "quoteOfTheDayDefinition": {
         "value": {
           "settings": {
           }
         }
-      },
-      "principalId": {
-        "value": "${AZURE_PRINCIPAL_ID}"
       },
       "LAWname": {
         "value": "lawpreview"
@@ -45,7 +45,7 @@
         "value": false
       },
       "AACdisableLocalAuth": {
-        "value": false
+        "value": true
       }
   }
 }

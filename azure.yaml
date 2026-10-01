@@ -13,6 +13,7 @@ hooks:
         continueOnError: false
 services:
     QuoteOfTheDay:
+        # Keep this path in sync with the QUOTE_OF_THE_DAY_PROJECT azd environment setting.
         project: QuoteOfTheDay
         host: appservice
         language: dotnet

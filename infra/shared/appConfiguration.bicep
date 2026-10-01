@@ -16,6 +16,9 @@ resource appConfigurationStore 'Microsoft.AppConfiguration/configurationStores@2
     softDeleteRetentionInDays: AACsoftDeleteRetentionInDays
     enablePurgeProtection: AACenablePurgeProtection
     disableLocalAuth: AACdisableLocalAuth
+    dataPlaneProxy: {
+      authenticationMode: 'Pass-through'
+    }
     telemetry: {
       resourceId: applicationInsightsId
     }
