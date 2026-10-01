@@ -39,14 +39,14 @@
             color: #333
         }
 
-            .vote-container .btn:focus {
-                outline: none;
-                box-shadow: none;
-            }
+        .vote-container .btn:focus-visible {
+            outline: 2px solid #1b6ec2;
+            outline-offset: 2px;
+        }
 
-            .vote-container .btn:hover {
-                background-color: #F0F0F0; /* Light gray background */
-            }
+        .vote-container .btn:hover {
+            background-color: #F0F0F0; /* Light gray background */
+        }
 
     .greeting-content {
         font-family: 'Georgia', serif; /* More artistic font */
@@ -56,7 +56,7 @@
         font-size: 2em; /* Bigger font size */
         font-family: 'Georgia', serif; /* More artistic font */
         font-style: italic; /* Italic font */
-        color: #4EC2F7; /* Medium-light blue color */
+        color: #0077cc; /* Accessible blue on white */
     }
 </style>
 
@@ -69,8 +69,8 @@
     </div>
 
     <div class="vote-container">
-        <button class="btn btn-primary" onclick="heartClicked(this)">
-            <i class="far fa-heart"></i> <!-- Heart icon -->
+        <button class="btn btn-primary" aria-label="Like quote" onclick="heartClicked(this)">
+            <i class="far fa-heart" aria-hidden="true"></i> <!-- Heart icon -->
         </button>
     </div>
 
