@@ -19,7 +19,7 @@ if (isRunningFromSetupScript)
 var appConfigurationEndpoint = builder.Configuration["APPCONFIG_ENDPOINT"];
 var applicationInsightsConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 
-if (!string.IsNullOrEmpty(appConfigurationEndpoint)) {
+if (!isRunningFromSetupScript && !string.IsNullOrEmpty(appConfigurationEndpoint)) {
     builder.Configuration
         .AddAzureAppConfiguration(o =>
         {
